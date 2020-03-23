@@ -2,13 +2,14 @@
 # the sqlite library allows us to communicate with the sqlite database
 import sqlite3
 # we are adding the import 'g' which will be used for the database
-from flask import Flask, render_template, request, g
+from flask import Flask, render_template, request, g, session, redirect
 
 DATABASE = './database.db'
 
-
 # the function get_db is taken from here
 # https://flask.palletsprojects.com/en/1.1.x/patterns/sqlite3
+
+
 def get_db():
     db = getattr(g, '_database', None)
     if db is None:
@@ -33,6 +34,7 @@ def make_dicts(cursor, row):
 
 
 app = Flask(__name__)
+app.secret_key = 'CSCB20'
 
 # the function close_connection is taken from here
 # https://flask.palletsprojects.com/en/1.1.x/patterns/sqlite3
@@ -45,7 +47,16 @@ def close_connection(exception):
 
 
 @app.route('/login')
-def root():
+def login():
+    # Check if already logged in
+    if session['user'] is not None:
+        return redirect("/index")
+
+    # Check if login unsuccessful
+    invalid = request.args.get("invalid")
+    if invalid == "true":
+        return render_template('login.html', invalid=True)
+
     # db = get_db()
     # db.row_factory = make_dicts
 
@@ -55,11 +66,26 @@ def root():
 
     # db.close()
     # return render_template('login.html', employee=employees)
-    return render_template('login.html')
+    return render_template('login.html', invalid=False)
+
+
+@app.route('/logout')
+def logout():
+    session['user'] = None
+    return redirect("/login")
 
 
 @app.route('/validation', methods=['POST'])
-def handle_data():
+def validation():
     username = request.form['username']
     password = request.form['password']
-    return "hi" + username + password
+
+    db = get_db()
+    db.row_factory = make_dicts
+    user = query_db("SELECT username FROM users WHERE username = '" +
+                    username + "' AND password = '" + password + "'", one=True)
+    if user is None:
+        return redirect("/login?invalid=true")
+
+    session['user'] = user['username']
+    return redirect("/index")
