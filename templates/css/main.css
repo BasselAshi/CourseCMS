@@ -1,0 +1,113 @@
+body {
+    background:
+        linear-gradient(27deg, #eaeaea 5px, transparent 5px) 0 5px,
+        linear-gradient(207deg, #eaeaea 5px, transparent 5px) 10px 0px,
+        linear-gradient(27deg, #dfdede 5px, transparent 5px) 0px 10px,
+        linear-gradient(207deg, #dfdede 5px, transparent 5px) 10px 5px,
+        linear-gradient(90deg, #e4e4e4 10px, transparent 10px),
+        linear-gradient(#e2e2e2 25%, #e5e5e5 25%, #dddddd 50%, transparent 50%, transparent 75%, #dbdbdb 75%, #d6d6d6);
+    background-color: #ececec;
+    background-size: 20px 20px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.logo {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    font-size: 1.2vw;
+    flex: 1;
+    text-align: center;
+    text-shadow: 0 3px #808080;
+    color: #dbdbdb;
+}
+
+.header {
+    position: fixed;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    overflow: hidden;
+    top: 0;
+    left: 0;
+    width: 100%;
+    justify-content: center;
+    background-color: #252525;
+}
+
+.nav {
+    flex: 5;
+    text-align: left;
+    display: flex;    
+    flex-wrap: wrap;
+}
+
+.nav a:link {
+    text-decoration: none;
+}
+
+.nav-selected {
+    font-weight: bold;
+    background-color: white;
+    color: black !important;
+}
+
+.nav-item {
+    flex: 1;
+    flex-grow: 1;
+    text-align: center;
+    color: #dbdbdb;
+    padding: 35px 0px 35px 0px;
+    font-size: 1vw; 
+}
+
+.nav-item:hover {
+    background-color: white;
+    color: black;
+}
+
+.footer {
+    background-color: #252525;
+    color: #dbdbdb;
+    padding: 20px;
+    margin-left: -10px;
+    text-align: center;
+    left: 0;
+    width: 100%;
+    font-size: 2vh;
+    position: absolute;
+  bottom: 0;
+}
+
+.footer a {
+    color: #dbdbdb;
+}
+
+p {
+    font-size: 1.85vh;
+}
+
+h2 {
+    font-size: 3vh;
+    }
+
+h3 {
+    text-decoration: underline;
+    font-size: 2.25vh;
+}
+
+h4 {
+    font-size: 2vh;
+}
+
+li {
+    margin: 1.32vh;
+    font-size: 1.85vh;
+}
+
+code {
+    background-color: rgb(110, 110, 110);
+    border-radius: 3px;
+    color: white;
+    font-family: courier, monospace;
+    padding: 0 3px;
+}

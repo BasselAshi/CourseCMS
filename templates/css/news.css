@@ -1,0 +1,26 @@
+body {
+    position: relative;
+    min-height: calc(var(--vh, 1vh) * 100);
+    overflow-x: hidden;
+    padding: 0;
+}
+
+.pageContent {
+    margin-top: 7.0rem;
+    padding-bottom: 5.0rem;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.pageContent a:link {
+    color: #0d1d79;
+    text-decoration: none;
+}
+
+.pageContent a:hover {
+    text-decoration: underline;
+}
+
+.tabbed {
+    margin-left: 20px;
+}
