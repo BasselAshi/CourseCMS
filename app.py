@@ -49,7 +49,7 @@ def close_connection(exception):
 @app.route('/login')
 def login():
     # Check if already logged in
-    if session['user'] is not None:
+    if session.get('user') != None:
         return redirect("/index")
 
     # Check if login unsuccessful
