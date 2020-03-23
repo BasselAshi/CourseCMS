@@ -44,14 +44,22 @@ def close_connection(exception):
         db.close()
 
 
-@app.route('/')
+@app.route('/login')
 def root():
-    db = get_db()
-    db.row_factory = make_dicts
+    # db = get_db()
+    # db.row_factory = make_dicts
 
-    employees = []
-    for employee in query_db('SELECT * FROM users'):
-        employees.append(employee)
+    # employees = []
+    # for employee in query_db('SELECT * FROM users'):
+    #     employees.append(employee)
 
-    db.close()
-    return render_template('index.html', employee=employees)
+    # db.close()
+    # return render_template('login.html', employee=employees)
+    return render_template('login.html')
+
+
+@app.route('/validation', methods=['POST'])
+def handle_data():
+    username = request.form['username']
+    password = request.form['password']
+    return "hi" + username + password
