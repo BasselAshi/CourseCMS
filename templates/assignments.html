@@ -1,129 +1,143 @@
 <!DOCTYPE html>
 <html>
 
-<head>
-    <title>CSCB20 - Assignments</title>
-    <link rel="stylesheet" type="text/css" href="css/main.css">
-    <link rel="stylesheet" type="text/css" href="css/assignments.css">
-</head>
+    <head>
+        <title>CSCB20 - Calendar</title>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/main.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/assignments.css') }}">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
 
-<body>
-    <div class="header">
-        <div class="logo">
-            <h1>CSCB20</h1>
+    <body>
+        <div class="header">
+            <div class="logo">
+                <h1>CSCB20</h1>
+            </div>
+            <div class="nav">
+                <a class="nav-item" href="index">Home</a>
+                <a class="nav-item" href="calendar">Calendar</a>
+                <a class="nav-item" href="news">News</a>
+                <a class="nav-item" href="https://piazza.com/class/k5l8ww7kz8l6f0">Discussion Board</a>
+                <a class="nav-item" href="lectures">Lectures</a>
+                <a class="nav-item" href="labs">Labs</a>
+                <a class="nav-item nav-selected">Assignments</a>
+                <a class="nav-item" href="tests">Tests</a>
+                <a class="nav-item" href="resources">Resources</a>
+            </div>
         </div>
-        <div class="nav">
-            <a class="nav-item" href="index.html">Home</a>
-            <a class="nav-item" href="calendar.html">Calendar</a>
-            <a class="nav-item" href="news.html">News</a>
-            <a class="nav-item" href="https://piazza.com/class/k5l8ww7kz8l6f0">Discussion Board</a>
-            <a class="nav-item" href="lectures.html">Lectures</a>
-            <a class="nav-item" href="labs.html"">Labs</a>
-            <a class=" nav-item nav-selected">Assignments</a>
-            <a class="nav-item" href="tests.html">Tests</a>
-            <a class="nav-item" href="resources.html">Resources</a>
-        </div>
-    </div>
-    <div class="pageContent">
-        <h2>
-            Introduction to Databases and Web Applications
-            <hr>
-        </h2>
-        <section id="courseOverview">
-            <h3>
-                Overview
-            </h3>
-            <p>
-                Here are the assignment and exercise topics, weights, and due dates. I will be posting the exercise and
-                <br>assignment handouts here. All exercises and assignments will be submitted on <a target="_blank"
-                    href="https://markus.utsc.utoronto.ca/cscb20w20">MarkUs</a>.
-            </p>
-            <hr>
-        </section>
-        <section id="assignments">
-            <h3>
-                Assignments
-            </h3>
-            <div class="table">
-                <div class="wrap">
-                    <div class="row">
-                        <ul class="titles">
-                            <li class="number"></li>
-                            <li class="exercise"><strong>EXERCISE</strong></li>
-                            <li class="topic"><strong>TOPIC (TENTATIVE)</strong></li>
-                            <li class="weight"><strong>WEIGHT</strong></li>
-                            <li class="date"><strong>DUE DATE</strong></li>
-                            <li class="solution"><strong>SOLUTION</strong></li>
-                        </ul>
-                    </div>
-                    <div class="row">
-                        <ul>
-                            <li class="number">1</li>
-                            <li class="exercise"><a target="_blank"
-                                    href="https://www.utsc.utoronto.ca/~bretscher/b20/assignments/a1/">Handout</a></li>
-                            <li class="topic">Relational Algebra and MySQL</li>
-                            <li class="weight">15%</li>
-                            <li class="date">Part 1. Wednesday Feb. 1, 11.59pm, Submit to <a target="_blank"
-                                    href="https://markus.utsc.utoronto.ca/cscb20w20">MarkUs</a>
-                                <font color="red">UPDATED</font> Part 2 and 3. For 5% bonus Saturday Feb. 11, 11.59pm or
-                                Friday <br>Feb. 17, 11.59 Submit to <a target="_blank"
-                                    href="https://markus.utsc.utoronto.ca/cscb20w20">MarkUs</a> You can download a
-                                dumpfile
-                                for
-                                IMDB_SMALL <a target="_blank" href="sqls/IMDB_SMALL.sql">here</a>.
-                                To use it type mysql -u utorid -p &lt; IMDB_SMALL.sql
-                            </li>
-                            <li class="solution"><a target="_blank" href="pdfs/soln.pdf">Solution Part 1</a></li>
-                        </ul>
-                    </div>
-                    <div class="row">
-                        <ul>
-                            <li class="week">2</li>
-                            <li class="exercise">Handout <a target="_blank" href="zips/a2.zip">a2.zip</a></li>
-                            <li class="topic">HTML, CSS, PHP</li>
-                            <li class="weight">15%</li>
-                            <li class="date">Part 1: Worth 50% Friday March. 10, 11.59pm, Submit to <a target="_blank"
-                                    href="https://markus.utsc.utoronto.ca/cscb20w20">MarkUs</a>
-                                Part 2: Worth 50% Friday March. 19, 11.59pm, Submit to <a target="_blank"
-                                    href="https://markus.utsc.utoronto.ca/cscb20w20">MarkUs</a>-->&lt</li>
-                            <li class="solution"></li>
-                        </ul>
-                    </div>
-                    <div class="row">
-                        <ul>
-                            <li class="week">3</li>
-                            <li class="exercise">
-                                <font color="red">New</font> <a target="_blank"
-                                    href="https://www.utsc.utoronto.ca/~bretscher/b20/assignments/a3/a3_marking_scheme.txt">Marking
-                                    Scheme for A3</a> <a target="_blank"
-                                    href="https://www.utsc.utoronto.ca/~bretscher/b20/assignments/a3/a3.html">Handout</a>
-                            </li>
-                            <li class="topic">Web Application and Database</li>
-                            <li class="weight">15%</li>
-                            <li class="date">Friday March 31, 11.59pm</li>
-                            <li class="solution"></li>
-                        </ul>
+
+
+        <div class="pageContent">
+            <!-- Keep the header -->
+            <div class="courseHeader">
+                <h2>
+                    Introduction to Databases and Web Applications
+                    <p class="user">Logged in as <a href="logout">{{ username }}</a></p>
+                </h2>
+                <hr>
+            </div>
+            <!-- Keep the header -->
+            <section id="courseOverview">
+                <h3>
+                    Overview
+                </h3>
+                <p>
+                    Here are the assignment and exercise topics, weights, and due dates. I will be posting the exercise
+                    and
+                    <br>assignment handouts here. All exercises and assignments will be submitted on <a target="_blank"
+                        href="https://markus.utsc.utoronto.ca/cscb20w20">MarkUs</a>.
+                </p>
+                <hr>
+            </section>
+            <section id="assignments">
+                <h3>
+                    Assignments
+                </h3>
+                <div class="table">
+                    <div class="wrap">
+                        <div class="row">
+                            <ul class="titles">
+                                <li class="number"></li>
+                                <li class="exercise"><strong>EXERCISE</strong></li>
+                                <li class="topic"><strong>TOPIC (TENTATIVE)</strong></li>
+                                <li class="weight"><strong>WEIGHT</strong></li>
+                                <li class="date"><strong>DUE DATE</strong></li>
+                                <li class="solution"><strong>SOLUTION</strong></li>
+                            </ul>
+                        </div>
+                        <div class="row">
+                            <ul>
+                                <li class="number">1</li>
+                                <li class="exercise"><a target="_blank"
+                                        href="https://www.utsc.utoronto.ca/~bretscher/b20/assignments/a1/">Handout</a>
+                                </li>
+                                <li class="topic">Relational Algebra and MySQL</li>
+                                <li class="weight">15%</li>
+                                <li class="date">Part 1. Wednesday Feb. 1, 11.59pm, Submit to <a target="_blank"
+                                        href="https://markus.utsc.utoronto.ca/cscb20w20">MarkUs</a>
+                                    <font color="red">UPDATED</font> Part 2 and 3. For 5% bonus Saturday Feb. 11,
+                                    11.59pm or
+                                    Friday <br>Feb. 17, 11.59 Submit to <a target="_blank"
+                                        href="https://markus.utsc.utoronto.ca/cscb20w20">MarkUs</a> You can download a
+                                    dumpfile
+                                    for
+                                    IMDB_SMALL <a target="_blank" href="static/sqls/IMDB_SMALL.sql">here</a>.
+                                    To use it type mysql -u utorid -p &lt; IMDB_SMALL.sql
+                                </li>
+                                <li class="solution"><a target="_blank" href="static/pdfs/soln.pdf">Solution Part 1</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="row">
+                            <ul>
+                                <li class="week">2</li>
+                                <li class="exercise">Handout <a target="_blank" href="static/zips/a2.zip">a2.zip</a>
+                                </li>
+                                <li class="topic">HTML, CSS, PHP</li>
+                                <li class="weight">15%</li>
+                                <li class="date">Part 1: Worth 50% Friday March. 10, 11.59pm, Submit to <a
+                                        target="_blank" href="https://markus.utsc.utoronto.ca/cscb20w20">MarkUs</a>
+                                    Part 2: Worth 50% Friday March. 19, 11.59pm, Submit to <a target="_blank"
+                                        href="https://markus.utsc.utoronto.ca/cscb20w20">MarkUs</a>-->&lt</li>
+                                <li class="solution"></li>
+                            </ul>
+                        </div>
+                        <div class="row">
+                            <ul>
+                                <li class="week">3</li>
+                                <li class="exercise">
+                                    <font color="red">New</font> <a target="_blank"
+                                        href="https://www.utsc.utoronto.ca/~bretscher/b20/assignments/a3/a3_marking_scheme.txt">Marking
+                                        Scheme for A3</a> <a target="_blank"
+                                        href="https://www.utsc.utoronto.ca/~bretscher/b20/assignments/a3/a3.html">Handout</a>
+                                </li>
+                                <li class="topic">Web Application and Database</li>
+                                <li class="weight">15%</li>
+                                <li class="date">Friday March 31, 11.59pm</li>
+                                <li class="solution"></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <hr>
-        </section>
-        <section id="assignmentFAQ">
-            <h3>
-                FAQ - Assignment 1
-            </h3>
-            <p>
-                Q. If the mysql portion asks for a director or actor without specifying which attributes, what should I
-                return?
-                <br>A. Return the first name, last name.
-            </p>
-            <hr>
-        </section>
-    </div>
-    <!-- Footer starts here -->
-    <div class="footer">
-        Website Designed by Mohamed Moussa & Bassel Ashi &copy;M&B |
-        <a target="_blank" href="https://www.utsc.utoronto.ca/cms/computer-science-1">Faculty of Computer Science at
-            UofT</a>
-    </div>
-</body>
+                <hr>
+            </section>
+            <section id="assignmentFAQ">
+                <h3>
+                    FAQ - Assignment 1
+                </h3>
+                <p>
+                    Q. If the mysql portion asks for a director or actor without specifying which attributes, what
+                    should I
+                    return?
+                    <br>A. Return the first name, last name.
+                </p>
+                <hr>
+            </section>
+        </div>
+        <!-- Footer starts here -->
+        <div class="footer">
+            Website Designed by Mohamed Moussa & Bassel Ashi &copy;M&B |
+            <a target="_blank" href="https://www.utsc.utoronto.ca/cms/computer-science-1">Faculty of Computer Science at
+                UofT</a>
+        </div>
+    </body>

@@ -111,3 +111,12 @@ code {
     font-family: courier, monospace;
     padding: 0 3px;
 }
+
+.courseHeader {
+    display: inline;
+}
+
+.user {
+    float: right;
+    vertical-align: middle;
+}

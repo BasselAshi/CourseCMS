@@ -1,111 +1,123 @@
 <!DOCTYPE html>
 <html>
 
-<head>
-    <title>CSCB20 - Resources</title>
-    <link rel="stylesheet" type="text/css" href="css/main.css">
-    <link rel="stylesheet" type="text/css" href="css/resources.css">
-</head>
+    <head>
+        <title>CSCB20 - Resources</title>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/main.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/resources.css') }}">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
 
-<body>
-    <div class="header">
-        <div class="logo">
-            <h1>CSCB20</h1>
+    <body>
+        <div class="header">
+            <div class="logo">
+                <h1>CSCB20</h1>
+            </div>
+            <div class="nav">
+                <a class="nav-item" href="index">Home</a>
+                <a class="nav-item" href="calendar">Calendar</a>
+                <a class="nav-item" href="news">News</a>
+                <a class="nav-item" href="https://piazza.com/class/k5l8ww7kz8l6f0">Discussion Board</a>
+                <a class="nav-item" href="lectures">Lectures</a>
+                <a class="nav-item" href="labs">Labs</a>
+                <a class="nav-item" href="assignments">Assignments</a>
+                <a class="nav-item" href="tests">Tests</a>
+                <a class="nav-item nav-selected">Resources</a>
+            </div>
         </div>
-        <div class="nav">
-            <a class="nav-item" href="index.html">Home</a>
-            <a class="nav-item" href="calendar.html">Calendar</a>
-            <a class="nav-item" href="news.html">News</a>
-            <a class="nav-item" href="https://piazza.com/class/k5l8ww7kz8l6f0">Discussion Board</a>
-            <a class="nav-item" href="lectures.html">Lectures</a>
-            <a class="nav-item" href="labs.html">Labs</a>
-            <a class="nav-item" href="assignments.html">Assignments</a>
-            <a class="nav-item" href="tests.html">Tests</a>
-            <a class="nav-item nav-selected">Resources</a>
+
+
+        <div class="pageContent">
+            <!-- Keep the header -->
+            <div class="courseHeader">
+                <h2>
+                    Introduction to Databases and Web Applications
+                    <p class="user">Logged in as <a href="logout">{{ username }}</a></p>
+                </h2>
+                <hr>
+            </div>
+            <!-- Keep the header -->
+            <section id="courseInfo">
+                <!-- Rename the section based on what youre adding and removing anything in there -->
+                <h3>
+                    Online Resources
+                </h3>
+                <ul>
+                    <li>
+                        Course information, lecture notes, tutorial material, important announcements, etc. will be
+                        posted
+                        on the course website. It is your responsibility to visit it frequently
+                    </li>
+                    <li>
+                        Beginner Tutorial for <a
+                            href="https://code.tutsplus.com/articles/sql-for-beginners--net-8200">MySQL</a>
+                    </li>
+                    <li>
+                        Communication is done through email, which you can find in the homepage
+                        <br>
+                        <span class="italic">Questions regarding the course material, assignments, midterm, etc. should
+                            be
+                            posed on the bulletin board. Questions about the assignment which you feel you cannot
+                            formulate
+                            without revealing your solution (should be very rare!), as well as questions and concerns
+                            regarding your personal matters should be directed to the instructor.</span>
+                    </li>
+                    <li>
+                        To access the discussion board, use the link in the navigation bar
+                        <br>
+                        <span class="italic">You are encouraged to use the bulletin board to discuss the course
+                            material,
+                            pose questions on the assignments, etc. The bulletin board will be monitored by the
+                            instructor
+                            and by your TAs. Please, be very careful not to reveal (parts of) your solution on the
+                            bulletin
+                            board</span>
+                    </li>
+                    <li>
+                        For anonymous feedback, please <a href="feedback">click here</a>
+                        <br>
+                    </li>
+                    <li>
+                        <a href="https://markus.utsc.utoronto.ca/cscb20w20">Markus</a> is the platform we use for
+                        submitting
+                        and viewing your assignment marks
+                        <br>
+                    </li>
+                </ul>
+            </section>
+            <section id="softwareInfo">
+                <hr>
+                <h3>
+                    Software and Documentation
+                </h3>
+                <p>To log onto Mathlab, do the following:</p>
+                <ol>
+                    <li>
+                        Mac OS comes with the application "terminal". Simple click on it to run.
+                        <br>
+                        Login to mathlab by typing
+                        <code>ssh utorid@mathlab.utsc.utoronto.ca</code> and then entering your password
+                    </li>
+                    <li>
+                        Windows - you will need a SSH client. PuTTY is a good free one. You can download and install
+                        here:
+                        <a href="https://www.putty.org/">PuTTY</a>.
+                        <br>
+                        Use the same command as above to login to mathlab:
+                        <code>ssh utorid@mathlab.utsc.utoronto.ca</code>
+                    </li>
+                </ol>
+                <hr>
+            </section>
         </div>
-    </div>
 
 
-    <div class="pageContent">
-        <!-- Keep the header -->
-        <h2>
-            Introduction to Databases and Web Applications
-            <hr>
-        </h2>
-        <!-- Keep the header -->
-        <section id="courseInfo">
-            <!-- Rename the section based on what youre adding and removing anything in there -->
-            <h3>
-                Online Resources
-            </h3>
-            <ul>
-                <li>
-                    Course information, lecture notes, tutorial material, important announcements, etc. will be posted
-                    on the course website. It is your responsibility to visit it frequently
-                </li>
-                <li>
-                    Beginner Tutorial for <a
-                        href="https://code.tutsplus.com/articles/sql-for-beginners--net-8200">MySQL</a>
-                </li>
-                <li>
-                    Communication is done through email, which you can find in the homepage
-                    <br>
-                    <span class="italic">Questions regarding the course material, assignments, midterm, etc. should be
-                        posed on the bulletin board. Questions about the assignment which you feel you cannot formulate
-                        without revealing your solution (should be very rare!), as well as questions and concerns
-                        regarding your personal matters should be directed to the instructor.</span>
-                </li>
-                <li>
-                    To access the discussion board, use the link in the navigation bar
-                    <br>
-                    <span class="italic">You are encouraged to use the bulletin board to discuss the course material,
-                        pose questions on the assignments, etc. The bulletin board will be monitored by the instructor
-                        and by your TAs. Please, be very careful not to reveal (parts of) your solution on the bulletin
-                        board</span>
-                </li>
-                <li>
-                    For anonymous feedback, please <a href="feedback.html">click here</a>
-                    <br>
-                </li>
-                <li>
-                    <a href="https://markus.utsc.utoronto.ca/cscb20w20">Markus</a> is the platform we use for submitting
-                    and viewing your assignment marks
-                    <br>
-                </li>
-            </ul>
-        </section>
-        <section id="softwareInfo">
-            <hr>
-            <h3>
-                Software and Documentation
-            </h3>
-            <p>To log onto Mathlab, do the following:</p>
-            <ol>
-                <li>
-                    Mac OS comes with the application "terminal". Simple click on it to run.
-                    <br>
-                    Login to mathlab by typing
-                    <code>ssh utorid@mathlab.utsc.utoronto.ca</code> and then entering your password
-                </li>
-                <li>
-                    Windows - you will need a SSH client. PuTTY is a good free one. You can download and install here:
-                    <a href="https://www.putty.org/">PuTTY</a>.
-                    <br>
-                    Use the same command as above to login to mathlab:
-                    <code>ssh utorid@mathlab.utsc.utoronto.ca</code>
-                </li>
-            </ol>
-            <hr>
-        </section>
-    </div>
-
-
-    <!-- Footer starts here -->
-    <div class="footer">
-        Website Designed by Mohamed Moussa & Bassel Ashi &copy;M&B |
-        <a target="_blank" href="https://www.utsc.utoronto.ca/cms/computer-science-1">Faculty of Computer Science at
-            UofT</a>
-    </div>
-</body>
+        <!-- Footer starts here -->
+        <div class="footer">
+            Website Designed by Mohamed Moussa & Bassel Ashi &copy;M&B |
+            <a target="_blank" href="https://www.utsc.utoronto.ca/cms/computer-science-1">Faculty of Computer Science at
+                UofT</a>
+        </div>
+    </body>
 
 </html>

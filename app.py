@@ -93,7 +93,74 @@ def validation():
     return redirect("/index")
 
 
+@app.route('/')
 @app.route('/index')
 def index():
-    username = session['user']
+    username = session.get('user')
+    if username is None:
+        return redirect('login')
     return render_template('index.html', username=username)
+
+
+@app.route('/calendar')
+def calendar():
+    username = session.get('user')
+    if username is None:
+        return redirect('login')
+    return render_template('calendar.html', username=username)
+
+
+@app.route('/news')
+def news():
+    username = session.get('user')
+    if username is None:
+        return redirect('login')
+    return render_template('news.html', username=username)
+
+
+@app.route('/lectures')
+def lectures():
+    username = session.get('user')
+    if username is None:
+        return redirect('login')
+    return render_template('lectures.html', username=username)
+
+
+@app.route('/labs')
+def labs():
+    username = session.get('user')
+    if username is None:
+        return redirect('login')
+    return render_template('labs.html', username=username)
+
+
+@app.route('/assignments')
+def assignments():
+    username = session.get('user')
+    if username is None:
+        return redirect('login')
+    return render_template('assignments.html', username=username)
+
+
+@app.route('/tests')
+def tests():
+    username = session.get('user')
+    if username is None:
+        return redirect('login')
+    return render_template('tests.html', username=username)
+
+
+@app.route('/resources')
+def resources():
+    username = session.get('user')
+    if username is None:
+        return redirect('login')
+    return render_template('resources.html', username=username)
+
+
+@app.route('/feedback')
+def feedback():
+    username = session.get('user')
+    if username is None:
+        return redirect('login')
+    return render_template('feedback.html', username=username)
