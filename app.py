@@ -84,8 +84,16 @@ def validation():
     db.row_factory = make_dicts
     user = query_db("SELECT username FROM users WHERE username = '" +
                     username + "' AND password = '" + password + "'", one=True)
+
+    # If invalid username/password
     if user is None:
         return redirect("/login?invalid=true")
 
     session['user'] = user['username']
     return redirect("/index")
+
+
+@app.route('/index')
+def index():
+    username = session['user']
+    return render_template('index.html', username=username)
