@@ -49,16 +49,6 @@ p {
 	flex: 1;
 }
 
-a:link {
-	color: white;
-	font-size: 12px !important;
-	text-decoration: none;
-}
-
-a:hover {
-	text-decoration: underline;
-}
-
 .input {
 	flex: 2;
 	text-align: center;
@@ -115,4 +105,18 @@ a:hover {
 	background-color: #bbbbbb;
 	color: #252525;
 	cursor: pointer;
+}
+
+.instructor {
+	border-radius: 0px !important;
+}
+
+.link {
+	color: white !important;
+	font-size: 12px !important;
+	text-decoration: none !important;
+}
+
+.link:hover {
+	text-decoration: underline !important;
 }

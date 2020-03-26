@@ -92,6 +92,7 @@ def validation():
     session['user'] = user['username']
     return redirect("/index")
 
+
 @app.route('/register')
 def register():
 
@@ -103,20 +104,17 @@ def register():
     # Invalid inputs
     if invalid == "true":
         return render_template('register.html', invalid=True)
-    
+
     return render_template('/register.html', invalid=False)
-    
+
+
 @app.route('/register_validation', methods=['POST'])
 def register_validation():
 
-    username = request.form['username']
-    password = request.form['password']
-    
-    if request.form['role_id'] == '1':
-        role_id = "1"
-    else:
-        role_id = "2"
-    
+    username = request.form.get('username')
+    password = request.form.get('password')
+    role_id = request.form.get('role_id')
+
     db = get_db()
     db.row_factory = make_dicts
 
@@ -125,13 +123,15 @@ def register_validation():
                     username + "'", one=True)
     if ((not user is None) or (password == "") or (username == "")):
         return redirect("/register?invalid=true")
-    
+
     # Insert User and log them in
     query_db("INSERT INTO users (username, password, role_id) VALUES ('" +
-                username + "'"+ "," +
-                "'" + password + "'"+ "," +
-                role_id + 
-                ")")
+             username + "'" + "," +
+             "'" + password + "'" + "," +
+             role_id +
+             ")")
+    get_db().commit()
+
     session['user'] = username
     return redirect("/index")
 
