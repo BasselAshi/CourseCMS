@@ -142,7 +142,7 @@ def index():
     username = session.get('user')
     if username is None:
         return redirect('login')
-    return render_template('index.html', username=username)
+    return render_template('index.html', username=username, roleid=getRank(username))
 
 
 @app.route('/calendar')
@@ -150,7 +150,7 @@ def calendar():
     username = session.get('user')
     if username is None:
         return redirect('login')
-    return render_template('calendar.html', username=username)
+    return render_template('calendar.html', username=username, roleid=getRank(username))
 
 
 @app.route('/news')
@@ -158,7 +158,7 @@ def news():
     username = session.get('user')
     if username is None:
         return redirect('login')
-    return render_template('news.html', username=username)
+    return render_template('news.html', username=username, roleid=getRank(username))
 
 
 @app.route('/lectures')
@@ -166,7 +166,7 @@ def lectures():
     username = session.get('user')
     if username is None:
         return redirect('login')
-    return render_template('lectures.html', username=username)
+    return render_template('lectures.html', username=username, roleid=getRank(username))
 
 
 @app.route('/labs')
@@ -174,7 +174,7 @@ def labs():
     username = session.get('user')
     if username is None:
         return redirect('login')
-    return render_template('labs.html', username=username)
+    return render_template('labs.html', username=username, roleid=getRank(username))
 
 
 @app.route('/assignments')
@@ -182,7 +182,7 @@ def assignments():
     username = session.get('user')
     if username is None:
         return redirect('login')
-    return render_template('assignments.html', username=username)
+    return render_template('assignments.html', username=username, roleid=getRank(username))
 
 
 @app.route('/tests')
@@ -190,7 +190,7 @@ def tests():
     username = session.get('user')
     if username is None:
         return redirect('login')
-    return render_template('tests.html', username=username)
+    return render_template('tests.html', username=username, roleid=getRank(username))
 
 
 @app.route('/resources')
@@ -198,7 +198,7 @@ def resources():
     username = session.get('user')
     if username is None:
         return redirect('login')
-    return render_template('resources.html', username=username)
+    return render_template('resources.html', username=username, roleid=getRank(username))
 
 
 @app.route('/feedback')
@@ -206,4 +206,41 @@ def feedback():
     username = session.get('user')
     if username is None:
         return redirect('login')
-    return render_template('feedback.html', username=username)
+    return render_template('feedback.html', username=username, roleid=getRank(username))
+
+
+@app.route('/mymarks')
+def mymarks():
+    username = session.get('user')
+    if username is None:
+        return redirect('mymarks')
+    return render_template('mymarks.html', username=username, roleid=getRank(username))
+
+
+@app.route('/studentmarks')
+def studentmarks():
+    username = session.get('user')
+    if username is None:
+        return redirect('studentmarks')
+    return render_template('studentmarks.html', username=username, roleid=getRank(username))
+
+
+@app.route('/studentfeedback')
+def studentfeedback():
+    username = session.get('user')
+    if username is None:
+        return redirect('studentfeedback')
+    return render_template('studentfeedback.html', username=username, roleid=getRank(username))
+
+
+def getRank(username):
+    db = get_db()
+    db.row_factory = make_dicts
+
+    user = query_db(
+        "SELECT role_id FROM users WHERE username = '" + username + "'", one=True)
+    return str(user['role_id'])
+
+
+if __name__ == '__main__':
+    app.run(debug=True)

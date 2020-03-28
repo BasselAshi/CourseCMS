@@ -32,7 +32,20 @@
             <div class="courseHeader">
                 <h2>
                     Introduction to Databases and Web Applications
-                    <p class="user">Logged in as <a href="logout">{{ username }}</a></p>
+                    <p class="user">
+                        {% if roleid == '2' %}
+                        <a href="feedback">Anonymous Feedback</a>
+                        /
+                        <a href="mymarks">View Marks</a>
+                        {% else %}
+                        <a href="studentfeedback">Student Feedback</a>
+                        /
+                        <a href="studentmarks">Student Marks</a>
+                        {% endif %}
+                        /
+                        Logged in as
+                        <a href="logout">{{ username }}</a>
+                    </p>
                 </h2>
                 <hr>
             </div>
