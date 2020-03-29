@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<title>CSCB20 - Student Feedback</title>
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/main.css') }}">
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/feedback.css') }}">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	</head>
+
+	<body>
+		<div class="header">
+			<div class="logo">
+				<h1>CSCB20</h1>
+			</div>
+			<div class="nav">
+				<a class="nav-item" href="index">Home</a>
+				<a class="nav-item" href="calendar">Calendar</a>
+				<a class="nav-item" href="news">News</a>
+				<a class="nav-item" href="https://piazza.com/class/k5l8ww7kz8l6f0">Discussion Board</a>
+				<a class="nav-item" href="lectures">Lectures</a>
+				<a class="nav-item" href="labs">Labs</a>
+				<a class="nav-item" href="assignments">Assignments</a>
+				<a class="nav-item" href="tests">Tests</a>
+				<a class="nav-item" href="resources">Resources</a>
+			</div>
+		</div>
+
+
+		<div class="pageContent">
+			<!-- Keep the header -->
+			<div class="courseHeader">
+				<h2>
+					Introduction to Databases and Web Applications
+					<p class="user">
+						{% if roleid == '2' %}
+						<a href="feedback">Anonymous Feedback</a>
+						/
+						<a href="mymarks">View Marks</a>
+						{% else %}
+						<a href="studentfeedback">Student Feedback</a>
+						/
+						<a href="studentmarks">Student Marks</a>
+						{% endif %}
+						/
+						Logged in as
+						<a href="logout">{{ username }}</a>
+					</p>
+				</h2>
+				<hr>
+			</div>
+			<!-- Keep the header -->
+			<section id="feedback">
+				<h3>
+					Student Feedback{% if feedbackId != None %} - Feedback #{{ feedbackId }}{% endif %}
+				</h3>
+				{% if submitted %}
+				<p style="color: green">Your response has been submitted successfully!</p>
+				{% else %}
+				<form action="{{ url_for('selectfeedback') }}" method="POST">
+					<div class="questions">
+						<div id="pickFeedback">
+							<label>Select a Feedback: </label>
+							<select name="feedbackSelect">
+								{% for feedback in feedbacks %}
+								<option value="{{ feedback['id'] }}">Feedback #{{ feedback['id'] }}</option>
+								{% endfor %}
+							</select>
+							<button class="button" style="float: none" name="submit" type="submit">Select
+								Feedback</button>
+							<hr>
+						</div>
+					</div>
+				</form>
+				{% endif %}
+			</section>
+			{% if feedbackId != None %}
+			<section id="answersSection">
+				<div class="question">
+					<label>What do you like about the instructor teaching? </label>
+					<textarea name="q4" class="feedback" readonly>{{ q1 }}</textarea>
+					<hr>
+				</div>
+				<div class="question">
+					<label>What do you recommend the instructor to do to improve their teaching? </label>
+					<textarea name="q4" class="feedback" readonly>{{ q2 }}</textarea>
+					<hr>
+				</div>
+				<div class="question">
+					<label>What do you like about the labs? </label>
+					<textarea name="q4" class="feedback" readonly>{{ q3 }}</textarea>
+					<hr>
+				</div>
+				<div class="question">
+					<label>What do you recommend the lab instructors to do to improve their lab teaching?
+					</label>
+					<textarea name="q4" class="feedback" readonly>{{ q4 }}</textarea>
+					<hr>
+				</div>
+				<form action="{{ url_for('deletefeedback') }}" method="POST">
+					<button class="button" type="submit" name="delete" value="{{ feedbackId }}">Delete</button>
+				</form>
+			</section>
+			{% endif %}
+			{% if deleted %}
+			<section id="deletedSection">
+				<p style="color: green">Feedback deleted successfully!</p>
+			</section>
+			{% endif %}
+		</div>
+
+
+		<!-- Footer starts here -->
+		<div class="footer">
+			Website Designed by Mohamed Moussa & Bassel Ashi &copy;M&B |
+			<a target="_blank" href="https://www.utsc.utoronto.ca/cms/computer-science-1">Faculty of Computer Science at
+				UofT</a>
+		</div>
+	</body>
+
+</html>

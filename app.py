@@ -222,7 +222,7 @@ def feedback():
 def mymarks():
     username = session.get('user')
     if username is None:
-        return redirect('mymarks')
+        return redirect('login')
     return render_template('mymarks.html', username=username, roleid=getRank(username))
 
 
@@ -230,7 +230,7 @@ def mymarks():
 def studentmarks():
     username = session.get('user')
     if username is None:
-        return redirect('studentmarks')
+        return redirect('login')
     return render_template('studentmarks.html', username=username, roleid=getRank(username))
 
 
@@ -238,8 +238,44 @@ def studentmarks():
 def studentfeedback():
     username = session.get('user')
     if username is None:
-        return redirect('studentfeedback')
-    return render_template('studentfeedback.html', username=username, roleid=getRank(username))
+        return redirect('login')
+    return render_template('studentfeedback.html', username=username, roleid=getRank(username), feedbackId=None, feedbacks=getFeedbacks())
+
+
+@app.route('/selectfeedback', methods=['POST'])
+def selectfeedback():
+    username = session.get('user')
+    if username is None:
+        return redirect('login')
+
+    db = get_db()
+    db.row_factory = make_dicts
+
+    feedbackId = request.form.get("feedbackSelect")
+
+    feedback = query_db(
+        "SELECT * FROM feedback WHERE id = " + feedbackId, one=True)
+    q1 = feedback['q1']
+    q2 = feedback['q2']
+    q3 = feedback['q3']
+    q4 = feedback['q4']
+
+    return render_template('studentfeedback.html', username=username, roleid=getRank(username), feedbackId=feedbackId, feedbacks=getFeedbacks(), q1=q1, q2=q2, q3=q3, q4=q4)
+
+
+@app.route('/deletefeedback', methods=['POST'])
+def deletefeedback():
+    username = session.get('user')
+    if username is None:
+        return redirect('login')
+
+    feedbackId = request.form.get("delete")
+    print(feedbackId)
+    query_db(
+        "DELETE FROM feedback WHERE id = " + feedbackId)
+    get_db().commit()
+
+    return render_template('studentfeedback.html', username=username, roleid=getRank(username), feedbackId=None, feedbacks=getFeedbacks(), deleted=True)
 
 
 def getRank(username):
@@ -259,6 +295,16 @@ def getInstructors():
         "SELECT id, username FROM users WHERE role_id = 1", one=False)
 
     return instructors
+
+
+def getFeedbacks():
+    db = get_db()
+    db.row_factory = make_dicts
+
+    feedbacks = query_db(
+        "SELECT id FROM feedback", one=False)
+
+    return feedbacks
 
 
 @app.route('/submitfeedback', methods=['POST'])

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<title>CSCB20 - Student Marks</title>
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/main.css') }}">
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/studentmarks.css') }}">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	</head>
+
+	<body>
+		<div class="header">
+			<div class="logo">
+				<h1>CSCB20</h1>
+			</div>
+			<div class="nav">
+				<a class="nav-item" href="index">Home</a>
+				<a class="nav-item" href="calendar">Calendar</a>
+				<a class="nav-item" href="news">News</a>
+				<a class="nav-item" href="https://piazza.com/class/k5l8ww7kz8l6f0">Discussion Board</a>
+				<a class="nav-item" href="lectures">Lectures</a>
+				<a class="nav-item" href="labs">Labs</a>
+				<a class="nav-item" href="assignments">Assignments</a>
+				<a class="nav-item" href="tests">Tests</a>
+				<a class="nav-item" href="resources">Resources</a>
+			</div>
+		</div>
+
+
+		<div class="pageContent">
+			<!-- Keep the header -->
+			<div class="courseHeader">
+				<h2>
+					Introduction to Databases and Web Applications
+					<p class="user">
+						{% if roleid == '2' %}
+						<a href="feedback">Anonymous Feedback</a>
+						/
+						<a href="mymarks">View Marks</a>
+						{% else %}
+						<a href="studentfeedback">Student Feedback</a>
+						/
+						<a href="studentmarks">Student Marks</a>
+						{% endif %}
+						/
+						Logged in as
+						<a href="logout">{{ username }}</a>
+					</p>
+				</h2>
+				<hr>
+			</div>
+			<!-- Keep the header -->
+			<section id="studentMarks">
+				<!-- Rename the section based on what youre adding and removing anything in there -->
+				<h3>
+					Student Marks
+				</h3>
+
+			</section>
+		</div>
+
+
+		<!-- Footer starts here -->
+		<div class="footer">
+			Website Designed by Mohamed Moussa & Bassel Ashi &copy;M&B |
+			<a target="_blank" href="https://www.utsc.utoronto.ca/cms/computer-science-1">Faculty of Computer Science at
+				UofT</a>
+		</div>
+	</body>
+
+</html>
