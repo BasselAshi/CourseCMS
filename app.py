@@ -206,7 +206,16 @@ def feedback():
     username = session.get('user')
     if username is None:
         return redirect('login')
-    return render_template('feedback.html', username=username, roleid=getRank(username))
+
+    # Only allow students
+    roleid = getRank(username)
+    if roleid != '2':
+        return redirect('login')
+
+    # Populate instructors
+    instructors = getInstructors()
+
+    return render_template('feedback.html', username=username, roleid=roleid, instructors=instructors, submitted=False)
 
 
 @app.route('/mymarks')
@@ -240,6 +249,33 @@ def getRank(username):
     user = query_db(
         "SELECT role_id FROM users WHERE username = '" + username + "'", one=True)
     return str(user['role_id'])
+
+
+def getInstructors():
+    db = get_db()
+    db.row_factory = make_dicts
+
+    instructors = query_db(
+        "SELECT id, username FROM users WHERE role_id = 1", one=False)
+
+    return instructors
+
+
+@app.route('/submitfeedback', methods=['POST'])
+def submitfeedback():
+    username = session.get('user')
+    instructorId = request.form['instruc']
+    q1 = request.form['q1']
+    q2 = request.form['q2']
+    q3 = request.form['q3']
+    q4 = request.form['q4']
+
+    # Insert User and log them in
+    query_db("INSERT INTO feedback (instructor_id, q1, q2, q3, q4) VALUES (" +
+             instructorId + ", '" + q1 + "', '" + q2 + "', '" + q3 + "', '" + q4 + "')")
+    get_db().commit()
+
+    return render_template('feedback.html', username=username, roleid=getRank(username), submitted=True)
 
 
 if __name__ == '__main__':
