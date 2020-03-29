@@ -6,6 +6,16 @@
         <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/main.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/feedback.css') }}">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <script type="text/javascript">
+            function specialCharacter(event) {
+                if (!((event.keyCode >= 65) && (event.keyCode <= 90) || (event.keyCode >= 97) && (event.keyCode <= 122) || (event.keyCode >= 48) && (event.keyCode <= 57))) {
+                    event.returnValue = false;
+                    return;
+                }
+                event.returnValue = true;
+            }
+        </script>
     </head>
 
     <body>
@@ -70,23 +80,27 @@
                         </div>
                         <div class="question">
                             <label>What do you like about the instructor teaching? </label>
-                            <textarea placeholder="I enjoyed this course!" name="q1" class="feedback"></textarea>
+                            <textarea placeholder="He's alright" name="q1" class="feedback"
+                                onkeypress="return specialCharacter(event)"></textarea>
                             <hr>
                         </div>
                         <div class="question">
                             <label>What do you recommend the instructor to do to improve their teaching? </label>
-                            <textarea placeholder="I enjoyed this course!" name="q2" class="feedback"></textarea>
+                            <textarea placeholder="He should use more examples" name="q2" class="feedback"
+                                onkeypress="return specialCharacter(event)"></textarea>
                             <hr>
                         </div>
                         <div class="question">
                             <label>What do you like about the labs? </label>
-                            <textarea placeholder="I enjoyed this course!" name="q3" class="feedback"></textarea>
+                            <textarea placeholder="Labs are not that useful but they are a good addon" name="q3"
+                                class="feedback" onkeypress="return specialCharacter(event)"></textarea>
                             <hr>
                         </div>
                         <div class="question">
                             <label>What do you recommend the lab instructors to do to improve their lab teaching?
                             </label>
-                            <textarea placeholder="I enjoyed this course!" name="q4" class="feedback"></textarea>
+                            <textarea placeholder="To provide more practical examples" name="q4" class="feedback"
+                                onkeypress="return specialCharacter(event)"></textarea>
                             <hr>
                         </div>
                     </div>
