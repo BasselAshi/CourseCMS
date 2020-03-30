@@ -210,7 +210,7 @@ def feedback():
     # Only allow students
     roleid = getRank(username)
     if roleid != '2':
-        return redirect('login')
+        return redirect('index')
 
     # Populate instructors
     instructors = getInstructors()
@@ -223,7 +223,17 @@ def mymarks():
     username = session.get('user')
     if username is None:
         return redirect('login')
-    return render_template('mymarks.html', username=username, roleid=getRank(username))
+
+    # Only allow students
+    roleid = getRank(username)
+    if roleid != '2':
+        return redirect('index')
+
+    # Populate marks
+    userId = getUserId(username)
+    marks = getMarks(userId)
+
+    return render_template('mymarks.html', username=username, roleid=getRank(username), marks=marks)
 
 
 @app.route('/studentmarks')
@@ -239,7 +249,16 @@ def studentfeedback():
     username = session.get('user')
     if username is None:
         return redirect('login')
-    return render_template('studentfeedback.html', username=username, roleid=getRank(username), feedbackId=None, feedbacks=getFeedbacks())
+
+    # Only allow instructors
+    roleid = getRank(username)
+    if roleid != '1':
+        return redirect('index')
+
+    # Populate feedbacks
+    feedbacks = getFeedbacks()
+
+    return render_template('studentfeedback.html', username=username, roleid=getRank(username), feedbackId=None, feedbacks=feedbacks)
 
 
 @app.route('/selectfeedback', methods=['POST'])
@@ -287,6 +306,15 @@ def getRank(username):
     return str(user['role_id'])
 
 
+def getUserId(username):
+    db = get_db()
+    db.row_factory = make_dicts
+
+    user = query_db(
+        "SELECT id FROM users WHERE username = '" + username + "'", one=True)
+    return str(user['id'])
+
+
 def getInstructors():
     db = get_db()
     db.row_factory = make_dicts
@@ -305,6 +333,19 @@ def getFeedbacks():
         "SELECT id FROM feedback", one=False)
 
     return feedbacks
+
+
+def getMarks(user_id):
+    db = get_db()
+    db.row_factory = make_dicts
+
+    marks = query_db(
+        "SELECT * FROM marks LEFT JOIN assessments on assessments.id = marks.assessment_id WHERE user_id = " + user_id, one=False)
+
+    if len(marks) == 0:
+        return None
+
+    return marks
 
 
 @app.route('/submitfeedback', methods=['POST'])
