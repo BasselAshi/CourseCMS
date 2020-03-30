@@ -4,7 +4,7 @@
     <head>
         <title>CSCB20 - My Marks</title>
         <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/main.css') }}">
-        <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/labs.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/mymarks.css') }}">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
 
@@ -69,15 +69,28 @@
                                 <li class="solutions"><strong>Remark Request</strong></li>
                             </ul>
                         </div>
-                        {% for mark in marks %}
-                        <div class="row">
-                            <ul>
-                                <li class="week">{{mark['title']}}</li>
-                                <li class="lab">{{mark['percentage']}}%</li>
-                                <li class="solutions">None</li>
-                            </ul>
-                        </div>
-                        {% endfor %}
+                        <form action="{{ url_for('submitremark') }}" method="POST">
+                            {% for mark in marks %}
+                            <div class="row">
+                                <ul>
+                                    <li class="assessment">{{mark['title']}}</li>
+                                    <li class="mark">{{mark['percentage']}}%</li>
+                                    <li class="remark">
+                                        {% if mark['done'] is none %}
+                                        <input class="remarkText" name="reason{{mark['assessment_id']}}"
+                                            placeholder="Enter a short explanation">
+                                        <button class="remarkBtn" name="submit"
+                                            value="{{mark['assessment_id']}}">Submit</button>
+                                        {% elif mark['done'] == 0 %}
+                                        <span style="color: yellow;">Remarks request received!</span>
+                                        {% elif mark['done'] == 1 %}
+                                        <span style="color: green;">Assessment remarked!</span>
+                                        {% endif %}
+                                    </li>
+                                </ul>
+                            </div>
+                            {% endfor %}
+                        </form>
                     </div>
                 </div>
             </section>

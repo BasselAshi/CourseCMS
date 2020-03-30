@@ -289,7 +289,7 @@ def deletefeedback():
         return redirect('login')
 
     feedbackId = request.form.get("delete")
-    print(feedbackId)
+
     query_db(
         "DELETE FROM feedback WHERE id = " + feedbackId)
     get_db().commit()
@@ -340,7 +340,7 @@ def getMarks(user_id):
     db.row_factory = make_dicts
 
     marks = query_db(
-        "SELECT * FROM marks LEFT JOIN assessments on assessments.id = marks.assessment_id WHERE user_id = " + user_id, one=False)
+        "SELECT m.user_id, m.assessment_id, m.percentage, a.title, r.done FROM marks m LEFT JOIN assessments a on a.id = m.assessment_id LEFT JOIN remarks r on a.id = r.assessment_id WHERE m.user_id = " + user_id, one=False)
 
     if len(marks) == 0:
         return None
@@ -363,6 +363,18 @@ def submitfeedback():
     get_db().commit()
 
     return render_template('feedback.html', username=username, roleid=getRank(username), submitted=True)
+
+
+@app.route('/submitremark', methods=['POST'])
+def submitremark():
+    assessmentId = request.form.get("submit")
+    reason = request.form.get("reason" + assessmentId)
+
+    # Insert assessment remark
+    query_db(
+        "INSERT INTO remarks (assessment_id, done, reason) VALUES (" + assessmentId + ", 0, '" + reason + "')")
+    get_db().commit()
+    return redirect("mymarks")
 
 
 if __name__ == '__main__':
