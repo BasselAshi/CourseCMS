@@ -252,8 +252,9 @@ def studentfeedback():
     if roleid != '1':
         return redirect('index')
 
-    # Populate feedbacks
-    feedbacks = getFeedbacks()
+    # Populate feedbacks for current instructor
+    userId = getUserId(username)
+    feedbacks = getFeedbacks(userId)
 
     return render_template('studentfeedback.html', username=username, roleid=getRank(username), feedbackId=None, feedbacks=feedbacks)
 
@@ -276,7 +277,7 @@ def selectfeedback():
     q3 = feedback['q3']
     q4 = feedback['q4']
 
-    return render_template('studentfeedback.html', username=username, roleid=getRank(username), feedbackId=feedbackId, feedbacks=getFeedbacks(), q1=q1, q2=q2, q3=q3, q4=q4)
+    return render_template('studentfeedback.html', username=username, roleid=getRank(username), feedbackId=feedbackId, feedbacks=getFeedbacks(getUserId(username)), q1=q1, q2=q2, q3=q3, q4=q4)
 
 
 @app.route('/deletefeedback', methods=['POST'])
@@ -291,7 +292,7 @@ def deletefeedback():
         "DELETE FROM feedback WHERE id = " + feedbackId)
     get_db().commit()
 
-    return render_template('studentfeedback.html', username=username, roleid=getRank(username), feedbackId=None, feedbacks=getFeedbacks(), deleted=True)
+    return render_template('studentfeedback.html', username=username, roleid=getRank(username), feedbackId=None, feedbacks=getFeedbacks(getUserId(username)), deleted=True)
 
 
 def getRank(username):
@@ -322,12 +323,12 @@ def getInstructors():
     return instructors
 
 
-def getFeedbacks():
+def getFeedbacks(instructorId):
     db = get_db()
     db.row_factory = make_dicts
 
     feedbacks = query_db(
-        "SELECT id FROM feedback", one=False)
+        "SELECT id FROM feedback WHERE instructor_id = ?", [instructorId], one=False)
 
     return feedbacks
 
