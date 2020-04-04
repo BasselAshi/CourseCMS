@@ -82,8 +82,8 @@ def validation():
 
     db = get_db()
     db.row_factory = make_dicts
-    user = query_db("SELECT username FROM users WHERE username = '" +
-                    username + "' AND password = '" + password + "'", one=True)
+    user = query_db("SELECT username FROM users WHERE username = ? AND password = ?", [
+                    username, password], one=True)
 
     # If invalid username/password
     if user is None:
@@ -119,17 +119,14 @@ def register_validation():
     db.row_factory = make_dicts
 
     # Check invalid username/password
-    user = query_db("SELECT username FROM users WHERE username = '" +
-                    username + "'", one=True)
+    user = query_db("SELECT username FROM users WHERE username = ?", [
+                    username], one=True)
     if ((not user is None) or (password == "") or (username == "")):
         return redirect("/register?invalid=true")
 
     # Insert User and log them in
-    query_db("INSERT INTO users (username, password, role_id) VALUES ('" +
-             username + "'" + "," +
-             "'" + password + "'" + "," +
-             role_id +
-             ")")
+    query_db("INSERT INTO users (username, password, role_id) VALUES (?, ?, ?)", [
+             username, password, role_id])
     get_db().commit()
 
     session['user'] = username
@@ -273,7 +270,7 @@ def selectfeedback():
     feedbackId = request.form.get("feedbackSelect")
 
     feedback = query_db(
-        "SELECT * FROM feedback WHERE id = " + feedbackId, one=True)
+        "SELECT * FROM feedback WHERE id = ?", [feedbackId], one=True)
     q1 = feedback['q1']
     q2 = feedback['q2']
     q3 = feedback['q3']
@@ -302,7 +299,7 @@ def getRank(username):
     db.row_factory = make_dicts
 
     user = query_db(
-        "SELECT role_id FROM users WHERE username = '" + username + "'", one=True)
+        "SELECT role_id FROM users WHERE username = ?", [username], one=True)
     return str(user['role_id'])
 
 
@@ -311,7 +308,7 @@ def getUserId(username):
     db.row_factory = make_dicts
 
     user = query_db(
-        "SELECT id FROM users WHERE username = '" + username + "'", one=True)
+        "SELECT id FROM users WHERE username = ?", [username], one=True)
     return str(user['id'])
 
 
@@ -340,7 +337,7 @@ def getMarks(user_id):
     db.row_factory = make_dicts
 
     marks = query_db(
-        "SELECT m.user_id, m.assessment_id, m.percentage, a.title, r.done FROM marks m LEFT JOIN assessments a on a.id = m.assessment_id LEFT JOIN remarks r on a.id = r.assessment_id WHERE m.user_id = " + user_id, one=False)
+        "SELECT m.user_id, m.assessment_id, m.percentage, a.title, r.done FROM marks m LEFT JOIN assessments a on a.id = m.assessment_id LEFT JOIN remarks r on a.id = r.assessment_id WHERE m.user_id = ?", [user_id], one=False)
 
     if len(marks) == 0:
         return None
@@ -351,15 +348,15 @@ def getMarks(user_id):
 @app.route('/submitfeedback', methods=['POST'])
 def submitfeedback():
     username = session.get('user')
-    instructorId = request.form['instruc']
-    q1 = request.form['q1']
-    q2 = request.form['q2']
-    q3 = request.form['q3']
-    q4 = request.form['q4']
+    instructorId = request.form.get('instruc')
+    q1 = request.form.get('q1')
+    q2 = request.form.get('q2')
+    q3 = request.form.get('q3')
+    q4 = request.form.get('q4')
 
     # Insert User and log them in
-    query_db("INSERT INTO feedback (instructor_id, q1, q2, q3, q4) VALUES (" +
-             instructorId + ", '" + q1 + "', '" + q2 + "', '" + q3 + "', '" + q4 + "')")
+    query_db("INSERT INTO feedback (instructor_id, q1, q2, q3, q4) VALUES (?, ?, ?, ?, ?)",
+             [instructorId, q1, q2, q3, q4])
     get_db().commit()
 
     return render_template('feedback.html', username=username, roleid=getRank(username), submitted=True)
@@ -371,9 +368,10 @@ def submitremark():
     reason = request.form.get("reason" + assessmentId)
 
     # Insert assessment remark
-    query_db(
-        "INSERT INTO remarks (assessment_id, done, reason) VALUES (" + assessmentId + ", 0, '" + reason + "')")
+    query_db("INSERT INTO remarks (assessment_id, done, reason) VALUES (?, 0, ?)", [
+             assessmentId, reason])
     get_db().commit()
+
     return redirect("mymarks")
 
 
