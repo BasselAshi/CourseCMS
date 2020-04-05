@@ -13,7 +13,7 @@ body {
 }
 
 .pageContent a:link {
-    color: #0d1d79;
+    color: #878ffd;
     text-decoration: none;
 }
 
@@ -21,6 +21,77 @@ body {
     text-decoration: underline;
 }
 
-.bold {
-    font-weight: bold;
+.pageContent a:visited {
+    color: #a779f0;
+    text-decoration: none;
+}
+
+.table {
+    background-color: #262626;
+    box-sizing: border-box;
+    margin: 16px;
+    display: flex;
+    padding: 25px;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+}
+
+.wrap {
+    flex: 1;
+}
+
+.wrap li{
+    flex:1;
+    display: inline;
+    padding: 0;
+}
+
+.row:hover {
+    box-shadow: 0px 8px 12px #0d1d79;
+    background-color: rgb(175, 228, 235);
+    transform: scale(1.05);
+}
+
+.row {
+    background-color: #bfbfbf;
+    padding: 0;
+    transition: .4s;
+}
+
+.row li {
+    background-color: #262626;
+    padding: 16px;
+    color: #fff;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 1vw;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.row ul {
+    display: flex;
+    padding: 0;
+}
+
+.remarkBtn {
+    transition-duration: 0.3s;
+    background-color: lightgray;
+    outline: none;
+}
+
+.remarkBtn:hover {
+    cursor: pointer;
+    background-color: white;
+}
+
+.remarkText {
+    outline:none;
+    background-color: lightgray;
+}
+
+.remarkText:focus {
+    border: 2px solid;
+    border-color: lightblue;
 }

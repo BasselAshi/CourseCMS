@@ -238,8 +238,36 @@ def studentmarks():
     username = session.get('user')
     if username is None:
         return redirect('login')
-    return render_template('studentmarks.html', username=username, roleid=getRank(username))
 
+    # Only allow instructors
+    roleid = getRank(username)
+    if roleid != '1':
+        return redirect('index')
+
+    assessments = getAssessments()
+
+    return render_template('studentmarks.html', username=username, title=None, roleid=getRank(username), assessments=assessments)
+
+@app.route('/selectassessment', methods=['POST'])
+def selectassessment():
+    username = session.get('user')
+    if username is None:
+        return redirect('login')
+
+    db = get_db()
+    db.row_factory = make_dicts
+
+    # Request assessmentId
+    assessmentId = request.form.get("assessmentselect")
+    
+    # Get the title of the assessment with id = assessmentId
+    titleDict = query_db("SELECT title FROM assessments WHERE id = ?", [assessmentId], one=True)
+    title = str(titleDict['title'])
+
+    # Get marks dictionary
+    marks = getMarksByAssessmentId(assessmentId)
+
+    return render_template('studentmarks.html', username=username, title=title, roleid=getRank(username), assessmentId=assessmentId, marks=marks, assessments=getAssessments())
 
 @app.route('/studentfeedback')
 def studentfeedback():
@@ -312,7 +340,6 @@ def getUserId(username):
         "SELECT id FROM users WHERE username = ?", [username], one=True)
     return str(user['id'])
 
-
 def getInstructors():
     db = get_db()
     db.row_factory = make_dicts
@@ -332,6 +359,15 @@ def getFeedbacks(instructorId):
 
     return feedbacks
 
+def getAssessments():
+    db = get_db()
+    db.row_factory = make_dicts
+
+    assessments = query_db(
+        "SELECT id, title FROM assessments", one=False)
+
+    return assessments
+
 
 def getMarks(user_id):
     db = get_db()
@@ -340,6 +376,17 @@ def getMarks(user_id):
     marks = query_db(
         "SELECT m.user_id, m.assessment_id, m.percentage, a.title, r.done FROM marks m LEFT JOIN assessments a on a.id = m.assessment_id LEFT JOIN remarks r on a.id = r.assessment_id WHERE m.user_id = ?", [user_id], one=False)
 
+    if len(marks) == 0:
+        return None
+
+    return marks
+
+def getMarksByAssessmentId(assessment_id):
+    db = get_db()
+    db.row_factory = make_dicts
+    marks = query_db(
+        "SELECT r.id As rId, u.username, m.percentage, r.done, r.reason, m.id  FROM marks m LEFT JOIN users u on u.id = m.user_id LEFT JOIN remarks r on m.assessment_id = r.assessment_id WHERE m.assessment_id = ?", [assessment_id], one=False)
+    
     if len(marks) == 0:
         return None
 
@@ -374,6 +421,26 @@ def submitremark():
     get_db().commit()
 
     return redirect("mymarks")
+
+@app.route('/studentremark', methods=['POST'])
+def studentremark():
+
+
+    remarkId = request.form.get("resolve")
+    if(remarkId != None):
+        # Resolve
+        query_db("UPDATE remarks SET done = 1 WHERE id = ?", [remarkId])
+        get_db().commit()
+
+    else:
+        markId = request.form.get("submit")
+        newMark = request.form.get("input")
+
+        # Update assessment mark
+        query_db("UPDATE marks SET percentage = ? WHERE id = ?", [newMark, markId])
+        get_db().commit()
+
+    return redirect("studentmarks")
 
 
 if __name__ == '__main__':
