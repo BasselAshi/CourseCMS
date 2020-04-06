@@ -5,7 +5,6 @@
         <title>CSCB20 - Student Marks</title>
         <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/main.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/studentmarks.css') }}">
-        <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/feedback.css') }}">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
 
@@ -54,9 +53,9 @@
             <section id="marksDisplayed">
                 <h3>
                     Student Marks{% if title != None %} - {{ title }}{% endif %}
-				</h3>
-				<!-- Rename the section based on what youre adding and removing anything in there -->
-				<form action="{{ url_for('selectassessment') }}" method="POST">
+                </h3>
+                <!-- Rename the section based on what youre adding and removing anything in there -->
+                <form action="{{ url_for('selectassessment') }}" method="POST">
                     <div class="assessmentDisplay">
                         <div id="pickAssessment">
                             <label>Select an Assessment: </label>
@@ -64,17 +63,17 @@
                                 {% for assessment in assessments %}
                                 <option value="{{ assessment['id'] }}">{{ assessment['title'] }}</option>
                                 {% endfor %}
-							</select>
-							<button class="button" style="float: none" name="submit" type="submit">Select
-								Assessment</button>
-							<hr>
-						</div>
-				</form>
+                            </select>
+                            <button class="button" style="float: none" name="submit" type="submit">Select
+                                Assessment</button>
+                            <hr>
+                        </div>
+                </form>
             </section>
             {% if title != None %}
             {% if marks == None %}
             <p>There are no current available marks yet!</p>
-			{% else %}
+            {% else %}
             <section id="table">
                 <div class="table">
                     <div class="wrap">
@@ -82,8 +81,8 @@
                             <ul class="titles">
                                 <li class="week"><strong>Student Name</strong></li>
                                 <li class="lab"><strong>Mark</strong></li>
-								<li class="solutions"><strong>Remark Request</strong></li>
-								<li class="solutions"><strong>New Mark</strong></li>
+                                <li class="solutions"><strong>Remark Request</strong></li>
+                                <li class="solutions"><strong>New Mark</strong></li>
                             </ul>
                         </div>
                         <form action="{{ url_for('studentremark') }}" method="POST">
@@ -93,22 +92,21 @@
                                     <li class="name">{{mark['username']}}</li>
                                     <li class="mark">{{mark['percentage']}}%</li>
                                     <li class="remark">
-										{% if mark['done'] is none %}
-										<span style="font-style: italic">None</span>
+                                        {% if mark['done'] is none %}
+                                        <span style="font-style: italic">None</span>
                                         {% elif mark['done'] == 0 %}
-										<span style="color: yellow;">
-											Reason: {{mark['reason']}} <button class="remarkBtn" name="resolve" value="{{mark['rId']}}">Resolve</button>
-										</span>
+                                        <span style="color: yellow;">
+                                            Reason: {{mark['reason']}} <button class="remarkBtn" name="resolve"
+                                                value="{{mark['rId']}}">Resolve</button>
+                                        </span>
                                         {% elif mark['done'] == 1 %}
                                         <span style="color: green;">Assessment remarked!</span>
                                         {% endif %}
-									</li>
-									<li class="Remark">
-                                        <input class="markText" name="input"
-                                            placeholder="Enter new mark">
-                                        <button class="remarkBtn" name="submit"
-                                            value="{{mark['id']}}">Submit</button>										
-									</li>
+                                    </li>
+                                    <li class="Remark">
+                                        <input class="markText" name="input" placeholder="Enter new mark">
+                                        <button class="remarkBtn" name="submit" value="{{mark['id']}}">Submit</button>
+                                    </li>
                                 </ul>
                             </div>
                             {% endfor %}
