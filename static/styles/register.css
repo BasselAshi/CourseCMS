@@ -8,7 +8,7 @@ body {
 	left: 50%;
 	position: absolute;
 	width: 400px;
-	height: 300px;
+	height: 350px;
 	transform: translate(-50%, -50%);
 	background-color: #252525;
 	border-radius: 50px 0 50px 0;
@@ -64,19 +64,19 @@ p {
 	box-shadow: 0 0 5px lightblue;
 }
 
-.username {
+.other {
 	margin: 0 50px 15px 50px;
 }
 
-.username:focus {
+.other:focus {
 	margin: 0 30px 15px 30px;
 }
 
-.password {
+.repassword {
 	margin: 0 50px 0 50px;
 }
 
-.password:focus {
+.repassword:focus {
 	margin: 0 30px 0 30px;
 }
 

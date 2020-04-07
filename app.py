@@ -249,6 +249,7 @@ def studentmarks():
 
     return render_template('studentmarks.html', username=username, title=None, roleid=getRank(username), assessments=assessments)
 
+
 @app.route('/selectassessment', methods=['POST'])
 def selectassessment():
     username = session.get('user')
@@ -270,11 +271,14 @@ def selectassessment():
 
     return render_template('studentmarks.html', username=username, title=title, roleid=getRank(username), assessmentId=assessmentId, marks=marks, assessments=getAssessments())
 
+
 def getAsesssmentName(assessmentId):
-    titleDict = query_db("SELECT title FROM assessments WHERE id = ?", [assessmentId], one=True)
+    titleDict = query_db("SELECT title FROM assessments WHERE id = ?", [
+                         assessmentId], one=True)
     title = str(titleDict['title'])
 
     return title
+
 
 @app.route('/studentfeedback')
 def studentfeedback():
@@ -347,6 +351,7 @@ def getUserId(username):
         "SELECT id FROM users WHERE username = ?", [username], one=True)
     return str(user['id'])
 
+
 def getInstructors():
     db = get_db()
     db.row_factory = make_dicts
@@ -365,6 +370,7 @@ def getFeedbacks(instructorId):
         "SELECT id FROM feedback WHERE instructor_id = ?", [instructorId], one=False)
 
     return feedbacks
+
 
 def getAssessments():
     db = get_db()
@@ -387,6 +393,7 @@ def getMarks(user_id):
         return None
 
     return marks
+
 
 def getMarksByAssessmentId(assessment_id):
     db = get_db()
@@ -429,6 +436,7 @@ def submitremark():
 
     return redirect("mymarks")
 
+
 @app.route('/studentremark', methods=['POST'])
 def studentremark():
 
@@ -455,7 +463,8 @@ def studentremark():
         newMark = request.form.get("input")
 
         # Update assessment mark
-        query_db("UPDATE marks SET percentage = ? WHERE id = ?", [newMark, markId])
+        query_db("UPDATE marks SET percentage = ? WHERE id = ?",
+                 [newMark, markId])
         get_db().commit()
 
     assessmentId = session.get('assessment_id')
