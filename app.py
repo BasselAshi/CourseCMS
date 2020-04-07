@@ -387,7 +387,7 @@ def getMarks(user_id):
     db.row_factory = make_dicts
 
     marks = query_db(
-        "SELECT m.user_id, m.assessment_id, m.percentage, a.title, r.done FROM marks m LEFT JOIN assessments a on a.id = m.assessment_id LEFT JOIN remarks r on a.id = r.assessment_id WHERE m.user_id = ?", [user_id], one=False)
+        "SELECT m.id as mark_id, m.user_id, m.assessment_id, m.percentage, a.title, r.done FROM marks m LEFT JOIN assessments a on a.id = m.assessment_id LEFT JOIN remarks r on m.id = r.mark_id WHERE m.user_id = ?", [user_id], one=False)
 
     if len(marks) == 0:
         return None
@@ -399,7 +399,7 @@ def getMarksByAssessmentId(assessment_id):
     db = get_db()
     db.row_factory = make_dicts
     marks = query_db(
-        "SELECT r.id As rId, u.username, m.percentage, r.done, r.reason, m.id  FROM marks m LEFT JOIN users u on u.id = m.user_id LEFT JOIN remarks r on m.assessment_id = r.assessment_id WHERE m.assessment_id = ?", [assessment_id], one=False)
+        "SELECT r.id As rId, u.username, m.percentage, r.done, r.reason, m.id  FROM marks m LEFT JOIN users u on u.id = m.user_id LEFT JOIN remarks r on m.id = r.mark_id WHERE m.assessment_id = ?", [assessment_id], one=False)
 
     if len(marks) == 0:
         return None
@@ -426,12 +426,12 @@ def submitfeedback():
 
 @app.route('/submitremark', methods=['POST'])
 def submitremark():
-    assessmentId = request.form.get("submit")
-    reason = request.form.get("reason" + assessmentId)
+    markId = request.form.get("submit")
+    reason = request.form.get("reason" + markId)
 
     # Insert assessment remark
-    query_db("INSERT INTO remarks (assessment_id, done, reason) VALUES (?, 0, ?)", [
-             assessmentId, reason])
+    query_db("INSERT INTO remarks (mark_id, done, reason) VALUES (?, 0, ?)", [
+             markId, reason])
     get_db().commit()
 
     return redirect("mymarks")

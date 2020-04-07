@@ -77,10 +77,10 @@
                                     <li class="mark">{{mark['percentage']}}%</li>
                                     <li class="remark">
                                         {% if mark['done'] is none %}
-                                        <input class="remarkText" name="reason{{mark['assessment_id']}}"
+                                        <input class="remarkText" name="reason{{mark['mark_id']}}"
                                             placeholder="Enter a short explanation">
                                         <button class="remarkBtn" name="submit"
-                                            value="{{mark['assessment_id']}}">Submit</button>
+                                            value="{{mark['mark_id']}}">Submit</button>
                                         {% elif mark['done'] == 0 %}
                                         <span style="color: yellow;">Remarks request received!</span>
                                         {% elif mark['done'] == 1 %}
