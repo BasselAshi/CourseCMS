@@ -104,7 +104,8 @@
                                         {% endif %}
                                     </li>
                                     <li class="Remark">
-                                        <input class="markText" name="input" placeholder="Enter new mark">
+                                        <input class="markText" name="input" placeholder="Enter new mark"
+                                            onkeypress="return keyValidation(event)">
                                         <button class="remarkBtn" name="submit" value="{{mark['id']}}">Submit</button>
                                     </li>
                                 </ul>
@@ -124,3 +125,7 @@
                 UofT</a>
         </div>
     </body>
+
+    <script src="{{ url_for('static',filename='js/studentmarks.js') }}"></script>
+
+</html>

@@ -57,7 +57,8 @@
                 {% if submitted %}
                 <p style="color: green">Your feedback has been submitted successfully!</p>
                 {% else %}
-                <form action="{{ url_for('submitfeedback') }}" method="POST">
+                <form name="formFeedback" action="{{ url_for('submitfeedback') }}" method="POST"
+                    onsubmit="return validateInput()">
                     <div class="questions">
                         <div id="pickInstructor">
                             <label>Select an Instructor: </label>
@@ -66,6 +67,7 @@
                                 <option value="{{ instructor['id'] }}">{{ instructor['username'] }}</option>
                                 {% endfor %}
                             </select>
+                            </p>
                             <hr>
                         </div>
                         <div class="question">
@@ -105,6 +107,8 @@
             <a target="_blank" href="https://www.utsc.utoronto.ca/cms/computer-science-1">Faculty of Computer Science at
                 UofT</a>
         </div>
+
+        <script src="{{ url_for('static',filename='js/feedback.js') }}"></script>
     </body>
 
 </html>
