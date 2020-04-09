@@ -74,6 +74,9 @@
 				</form>
 				{% endif %}
 			</section>
+			{% if exist == False %}
+			<p>There are no current available feedbacks yet!</p>
+			{% endif %}			
 			{% if feedbackId != None %}
 			<section id="answersSection">
 				<div class="question">

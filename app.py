@@ -308,6 +308,10 @@ def selectfeedback():
     db.row_factory = make_dicts
 
     feedbackId = request.form.get("feedbackSelect")
+    
+    # No feedbacks exist
+    if feedbackId == None:
+        return render_template('studentfeedback.html', feedbackId=feedbackId, exist=False, username=username, roleid=getRank(username), feedbacks=getFeedbacks(getUserId(username)))
 
     feedback = query_db(
         "SELECT * FROM feedback WHERE id = ?", [feedbackId], one=True)
